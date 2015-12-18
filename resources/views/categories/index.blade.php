@@ -23,14 +23,12 @@
                     <tr>
                         <td style="text-align: center">{{ trans("categories.fields.name") }}</td>
                         <td style="text-align: center"></td>
-                        <td style="text-align: center"></td>
                     </tr>
                     </thead>
                     <tbody>
                         @foreach($categories as $categories)
                             <tr class="odd gradeX">
                                 <td style="text-align: center; vertical-align: middle;">{{$categories->name}}</td>
-                                <td style="text-align: center; vertical-align: middle; width: 50px;"><a href="{{$categories->active ? '/categories/'.$categories->id.'/deactive' : '/categories/'.$categories->id.'/active'}}" class="btn btn-sm {{$categories->active ? "green" : "red"}}" style="width: 35px; margin-right: 0px;"><i class="fa {{$categories->active ? "fa-check" : "fa-times"}}"></i></a></td>
                                 <td style="text-align: center; vertical-align: middle; width: 90px !important; padding: 5px 0 5px 5px;">
                                     <a href="/categories/{{$categories->id}}/edit" class="btn btn-sm yellow" style="width: 35px;">
                                         <i class="fa fa-pencil"></i>

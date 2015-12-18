@@ -53,3 +53,27 @@ Route::controllers([
     'admin' => 'Auth\AuthController',
     'password' => 'Auth\PasswordController',
 ]);
+
+Route::group([], function()
+{
+    Route::get("/appbenefits", "AppbenefitsController@index");
+    Route::get("/appbenefits/create", "AppbenefitsController@create");
+    Route::post("/appbenefits/store", "AppbenefitsController@store");
+    Route::get("/appbenefits/{id}/edit", "AppbenefitsController@edit");
+    Route::post("/appbenefits/update", "AppbenefitsController@update");
+    Route::get("/appbenefits/{id}/active", "AppbenefitsController@active");
+    Route::get("/appbenefits/{id}/deactive", "AppbenefitsController@deactive");
+    Route::post("/appbenefits/delete", "AppbenefitsController@destroy");
+});
+
+Route::group([], function()
+{
+    Route::get("/appbenefits", "AppbenefitsController@index");
+    Route::get("/appbenefits/create", "AppbenefitsController@create");
+    Route::post("/appbenefits/store", "AppbenefitsController@store");
+    Route::get("/appbenefits/{id}/edit", "AppbenefitsController@edit");
+    Route::post("/appbenefits/update", "AppbenefitsController@update");
+    Route::get("/appbenefits/{id}/active", "AppbenefitsController@active");
+    Route::get("/appbenefits/{id}/deactive", "AppbenefitsController@deactive");
+    Route::post("/appbenefits/delete", "AppbenefitsController@destroy");
+});
