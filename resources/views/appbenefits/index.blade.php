@@ -27,6 +27,7 @@
                         <td style="text-align: center">{{ trans("appbenefits.fields.description") }}</td>
                         <td style="text-align: center">{{ trans("appbenefits.fields.status") }}</td>
                         <td style="text-align: center">{{ trans("appbenefits.fields.single_use") }}</td>
+                        <td style="text-align: center">Actions</td>
                     </tr>
                     </thead>
                     <tbody>
@@ -36,7 +37,7 @@
                                 <td style="text-align: center; vertical-align: middle;">{{$appbenefits->establishment_id}}</td>
                                 <td style="text-align: center; vertical-align: middle;">{{$appbenefits->category}}</td>
                                 <td style="text-align: center; vertical-align: middle;">{{$appbenefits->description}}</td>
-                                <td style="text-align: center; vertical-align: middle; width: 50px;"><a href="{{$appbenefits->status ? '/appbenefits/'.$appbenefits->id.'/deactive' : '/appbenefits/'.$appbenefits->id.'/active'}}" class="btn btn-sm {{$appbenefits->active ? "green" : "red"}}" style="width: 35px; margin-right: 0px;"><i class="fa {{$appbenefits->status ? "fa-check" : "fa-times"}}"></i></a></td>
+                                <td style="text-align: center; vertical-align: middle; width: 50px;"><a href="{{$appbenefits->status ? '/appbenefits/'.$appbenefits->id.'/deactive' : '/appbenefits/'.$appbenefits->id.'/active'}}" class="btn btn-sm {{$appbenefits->status ? "green" : "red"}}" style="width: 35px; margin-right: 0px;"><i class="fa {{$appbenefits->status ? "fa-check" : "fa-times"}}"></i></a></td>
                                 <td style="text-align: center; vertical-align: middle;">{{$appbenefits->single_use}}</td>
                                 <td style="text-align: center; vertical-align: middle; width: 90px !important; padding: 5px 0 5px 5px;">
                                     <a href="/appbenefits/{{$appbenefits->id}}/edit" class="btn btn-sm yellow" style="width: 35px;">
@@ -63,7 +64,7 @@
         app.orderedTableInit('.table', 0, 'asc');
 
         $(".deleteModal").on("click", function(){
-            
+
             app.throwConfirmationModal('<?php echo trans('appbenefits.titles.delete'); ?>','<?php echo trans('appbenefits.notifications.delete_confirmation'); ?>','/appbenefits/delete', $(this).data("id"));
         });
     });

@@ -31,6 +31,7 @@ Route::group([], function()
 Route::group([], function()
 {
     Route::get("/categories", "CategoriesController@index");
+    Route::get("/categories/translations/{id}", "CategoriesController@displayTranslations");
     Route::get("/categories/create", "CategoriesController@create");
     Route::post("/categories/store", "CategoriesController@store");
     Route::get("/categories/{id}/edit", "CategoriesController@edit");
@@ -76,4 +77,28 @@ Route::group([], function()
     Route::get("/appbenefits/{id}/active", "AppbenefitsController@active");
     Route::get("/appbenefits/{id}/deactive", "AppbenefitsController@deactive");
     Route::post("/appbenefits/delete", "AppbenefitsController@destroy");
+});
+
+Route::group([], function()
+{
+    Route::get("/appcodes", "AppcodesController@index");
+    Route::get("/appcodes/create", "AppcodesController@create");
+    Route::post("/appcodes/store", "AppcodesController@store");
+    Route::get("/appcodes/{id}/edit", "AppcodesController@edit");
+    Route::post("/appcodes/update", "AppcodesController@update");
+    Route::get("/appcodes/{id}/active", "AppcodesController@active");
+    Route::get("/appcodes/{id}/deactive", "AppcodesController@deactive");
+    Route::post("/appcodes/delete", "AppcodesController@destroy");
+});
+
+Route::group([], function()
+{
+    Route::get("/appestablishments", "AppestablishmentsController@index");
+    Route::get("/appestablishments/create", "AppestablishmentsController@create");
+    Route::post("/appestablishments/store", "AppestablishmentsController@store");
+    Route::get("/appestablishments/{id}/edit", "AppestablishmentsController@edit");
+    Route::post("/appestablishments/update", "AppestablishmentsController@update");
+    Route::get("/appestablishments/{id}/active", "AppestablishmentsController@active");
+    Route::get("/appestablishments/{id}/deactive", "AppestablishmentsController@deactive");
+    Route::post("/appestablishments/delete", "AppestablishmentsController@destroy");
 });

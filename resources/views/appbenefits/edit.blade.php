@@ -19,6 +19,20 @@
                     <div class="form-body">
                         <div class="form-group">
                             <label class="control-label col-md-3">
+                                {{ trans("appbenefits.fields.establishment_id") }} <span class="required"> * </span>
+                            </label>
+                            <div class="col-md-4">
+                                <select name="establishment_id" class="form-control">
+                                    <option value="">Select</option>
+                                    @foreach($establishments as $establishment)
+                                    <option value="{{$establishment->id}}" @if($establishment->id == $appbenefits->establishment_id) selected="selected" @endif>{{$establishment->name}}</option>
+                                    @endforeach
+                                </select>
+                                
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">
                                 {{ trans("appbenefits.fields.category") }} <span class="required"> * </span>
                             </label>
                             <div class="col-md-4">

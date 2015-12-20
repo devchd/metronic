@@ -21,16 +21,18 @@
                 <table class="table table-striped table-bordered table-hover">
                     <thead>
                     <tr>
+                        <td style="text-align: center">Language</td>
                         <td style="text-align: center">{{ trans("categories.fields.name") }}</td>
-                        <td style="text-align: center"> View Translations</td>
+                        
                         <td style="text-align: center"></td>
                     </tr>
                     </thead>
                     <tbody>
                         @foreach($categories as $categories)
                             <tr class="odd gradeX">
+                                <td style="text-align: center; vertical-align: middle;">{{$categories->lang}}</td>
                                 <td style="text-align: center; vertical-align: middle;">{{$categories->name}}</td>
-                                <td style="text-align: center; vertical-align: middle;"><a href="/categories/translations/{{$categories->id}}" class="btn btn-sm yellow" style="width: 35px;"><i class="fa fa-eye"></i></a></td>
+                               
                                 <td style="text-align: center; vertical-align: middle; width: 90px !important; padding: 5px 0 5px 5px;">
                                     <a href="/categories/{{$categories->id}}/edit" class="btn btn-sm yellow" style="width: 35px;">
                                         <i class="fa fa-pencil"></i>

@@ -9,7 +9,7 @@ return [
     ],
 	'fields' => [
         "id" => "ID",
-        "establishment_id" => "Establishment ID",
+        "establishment_id" => "Establishment",
         "category" =>"Category",
         "description" => "Description",
         "status"=>"Status",
@@ -32,7 +32,8 @@ return [
         "no_exists" => "The appbenefits does not exist.",
         "delete_confirmation" => "Are you sure, that you will delete selected appbenefits?",
         "field_category_missing" => "The field category is required.",
-        "field_description_missing" => "The field description is required."
+        "field_description_missing" => "The field description is required.",
+        "field_establishment_id_missing" => "The field establishment is required."
     ],
 	'validations' => [
         "required" => "This field is required.",

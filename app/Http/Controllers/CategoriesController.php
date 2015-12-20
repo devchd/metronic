@@ -7,10 +7,10 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\View;
 
 use App\Models\Categories;
-
+use App\Models\AppCategoriesI18n;
 class CategoriesController extends Controller {
 	public function index(){
-		$categories = Categories::all();
+		$categories = Categories::with('i18n')->get();
 
         return View::make('categories.index')->with("categories", $categories);
 	}
@@ -21,19 +21,31 @@ class CategoriesController extends Controller {
 
 	public function store(){
 	    $name = Input::has("name") ? Input::get("name") : "";
-        
+        $lang = Input::get("lang");
+        $name_lang = Input::has("name_lang") ? Input::get("name_lang") : "";
+
 		if($name == ""){
             Session::flash("error", trans("categories.notifications.field_name_missing"));
 
             return Redirect::to("/categories/create")->withInput();
         }
 
-		Categories::create(
+		$category_id = Categories::create(
 			array(
 				'name' => $name
 			)
 		);
+        //dd($lang, $name_lang,$category_id->id ); exit;
+        if($lang != "en" && $name_lang != " "){
 
+            AppCategoriesI18n::create(
+                array(
+                    'category_id' => $category_id->id,
+                    'lang' => $lang,
+                    'name' => $name_lang
+                    )
+                );
+        }
 		Session::flash('success', trans("categories.notifications.register_successful"));
 
 		return Redirect::to("/categories");
@@ -42,11 +54,13 @@ class CategoriesController extends Controller {
 	public function edit($id){
         $categories = Categories::find($id);
 
+
         if(!$categories){
             Session::flash('error', trans("categories.notifications.no_exists"));
 
             return Redirect::to("/categories");
         }
+
 
         return View::make('categories.edit')->with("categories", $categories);
 	}
@@ -125,5 +139,12 @@ class CategoriesController extends Controller {
         Session::flash('success', trans("categories.notifications.delete_successful"));
 
         return Redirect::to("/categories");
+    }
+
+    public function displayTranslations($id){
+
+        $categories = AppCategoriesI18n::where('category_id', $id)->get();
+        return View::make('categories.langindex')->with("categories", $categories);
+
     }
 }

@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\View;
 
 use App\Models\Appbenefits;
-
+use DB;
 class AppbenefitsController extends Controller {
 	public function index(){
 		$appbenefits = Appbenefits::all();
@@ -16,29 +16,33 @@ class AppbenefitsController extends Controller {
 	}
 
 	public function create(){
-		return View::make('appbenefits.new');
+        $establishments = DB::table('tb_app_establishments')->get();
+		return View::make('appbenefits.new')->with("establishments", $establishments);
 	}
 
 	public function store(){
 	    $category = Input::has("category") ? Input::get("category") : "";
         $description = Input::has("description") ? Input::get("description") : "";
         $single_use = Input::has("single_use") ? Input::get("single_use") : "";
-		if($category == "" || $description == ""){
+        $establishment_id= Input::has("establishment_id") ? Input::get("establishment_id") : "";
+		
+        if($category == "" || $description == "" || $establishment_id == ""){
             Session::flash("error", trans("appbenefits.notifications.field_name_missing"));
 
             return Redirect::to("/appbenefits/create")->withInput();
         }
-        $appbenefits = Appbenefits::all()->last()->id;
+        
         
 		Appbenefits::create(
 			array(
-                'establishment_id' => $appbenefits+1,
+                'establishment_id' => $establishment_id,
 				'category' => $category,
                 'description'=>$description,
                 'single_use'=>$single_use
 			)
 		);
 
+       
 		Session::flash('success', trans("appbenefits.notifications.register_successful"));
 
 		return Redirect::to("/appbenefits");
@@ -53,7 +57,9 @@ class AppbenefitsController extends Controller {
             return Redirect::to("/appbenefits");
         }
 
-        return View::make('appbenefits.edit')->with("appbenefits", $appbenefits);
+        $establishments = DB::table('tb_app_establishments')->get();
+        return View::make('appbenefits.edit')->with("appbenefits", $appbenefits)
+                    ->with("establishments", $establishments);
 	}
 
 	public function update(){
@@ -68,13 +74,15 @@ class AppbenefitsController extends Controller {
         $category = Input::has("category") ? Input::get("category") : "";
         $description = Input::has("description") ? Input::get("description") : "";
         $single_use = Input::has("single_use") ? Input::get("single_use") : "";
-        
-        if($category == "" || $description == ""){
+        $establishment_id= Input::has("establishment_id") ? Input::get("establishment_id") : "";
+
+        if($category == "" || $description == "" || $establishment_id == ""){
             Session::flash("error", trans("appbenefits.notifications.field_name_missing"));
 
             return Redirect::to("/appbenefits/$appbenefits->id/edit")->withInput();
         }
-
+        
+        $appbenefits->establishment_id = $establishment_id;
         $appbenefits->category = $category;
         $appbenefits->description = $description;
         $appbenefits->single_use = $single_use;

@@ -24,6 +24,26 @@
                                 <input type="text" name="name" value="{{Input::old("name")}}" class="form-control"/>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">
+                                Select Language
+                            </label>
+                            <div class="col-md-4">
+                                <select name="lang" class="form-control">
+                                    <option value="en">English</option>
+                                    <option value="pt">Portugese</option>
+                                </select>
+                                
+                                                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">
+                                Translated Name 
+                            </label>
+                            <div class="col-md-4">
+                                <input type="text" name="name_lang" value="{{Input::old("name_lang")}}" class="form-control"/>
+                            </div>
+                        </div>
                     </div>
                     <div class="form-actions">
                         <div class="row">
