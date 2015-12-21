@@ -16,6 +16,7 @@
                 <form action="/appestablishments/update" method="post" id="form_appestablishments" class="form-horizontal" enctype="multipart/form-data">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <input type="hidden" name="id" value="{{ $appestablishments->id }}">
+                    
                     <div class="form-body">
                         <div class="form-group">
                             <label class="control-label col-md-3">

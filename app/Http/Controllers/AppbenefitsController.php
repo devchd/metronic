@@ -7,10 +7,11 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\View;
 
 use App\Models\Appbenefits;
+use App\Models\AppBenefitI18n;
 use DB;
 class AppbenefitsController extends Controller {
 	public function index(){
-		$appbenefits = Appbenefits::all();
+		$appbenefits = Appbenefits::with('establishment')->get();
 
         return View::make('appbenefits.index')->with("appbenefits", $appbenefits);
 	}
@@ -130,6 +131,99 @@ class AppbenefitsController extends Controller {
 
     public function destroy(){
         $appbenefits = Appbenefits::find(Input::get("id"));
+
+        if(!$appbenefits){
+            Session::flash('error', trans("appbenefits.notifications.no_exists"));
+
+            return Redirect::to("/appbenefits");
+        }
+
+        $appbenefits->delete();
+
+        Session::flash('success', trans("appbenefits.notifications.delete_successful"));
+
+        return Redirect::to("/appbenefits");
+    }
+
+    public function translations($id){
+        $appbenefits = AppBenefitI18n::where('benefit_id', $id)->get();
+
+        return View::make('appbenefits.langindex')->with("appbenefits", $appbenefits)->with("id",$id);
+    }
+
+    public function langcreate($id){
+        
+        return View::make('appbenefits.langnew')->with("id",$id);
+    }
+
+    public function langstore(){
+        $lang = Input::has("lang") ? Input::get("lang") : "";
+        $description = Input::has("description") ? Input::get("description") : "";
+        $benefit_id = Input::has("benefit_id") ? Input::get("benefit_id") : "";
+        
+        if($lang == "" || $description == "" ){
+            Session::flash("error", trans("appbenefits.notifications.field_name_missing"));
+
+            return Redirect::to("/appbenefits/create/".$id."/lang")->withInput();
+        }
+        
+        
+        AppBenefitI18n::create(
+            array(
+                'benefit_id' => $benefit_id,
+                'lang' => $lang,
+                'description'=>$description
+            )
+        );
+
+       
+        Session::flash('success', trans("appbenefits.notifications.register_successful"));
+
+        return Redirect::to("/appbenefits/translations/".$benefit_id);
+    }
+
+    public function langedit($id){
+        $appbenefits = AppBenefitI18n::find($id);
+
+        if(!$appbenefits){
+            Session::flash('error', trans("appbenefits.notifications.no_exists"));
+
+            return Redirect::to("/appbenefits/translations/".$appbenefits->benefit_id);
+        }
+
+        return View::make('appbenefits.langedit')->with("appbenefits", $appbenefits);
+    }
+
+    public function langupdate(){
+        $appbenefits = AppBenefitI18n::find(Input::get("id"));
+
+        if(!$appbenefits){
+            Session::flash('error', trans("appbenefits.notifications.no_exists"));
+
+            return Redirect::to("/appbenefits");
+        }
+
+        $lang = Input::has("lang") ? Input::get("lang") : "";
+        $description = Input::has("description") ? Input::get("description") : "";
+        
+        if($lang == "" || $description == ""){
+            Session::flash("error", trans("appbenefits.notifications.field_name_missing"));
+
+            return Redirect::to("/appbenefits/$appbenefits->id/editlang")->withInput();
+        }
+        
+        $appbenefits->lang = $lang;
+        $appbenefits->description = $description;
+       
+        $appbenefits->save();
+
+        Session::flash('success', trans("appbenefits.notifications.update_successful"));
+
+        return Redirect::to("/appbenefits/translations/".$appbenefits->benefit_id);
+    }
+
+    public function langdestroy(){
+        $appbenefits = AppBenefitI18n::find(Input::get("id"));
 
         if(!$appbenefits){
             Session::flash('error', trans("appbenefits.notifications.no_exists"));

@@ -11,7 +11,7 @@
             <div class="portlet-title">
                 <div class="actions">
                     <div class="btn-group">
-                        <a class="btn btn-sm grey" href="/appbenefits/create">
+                        <a class="btn btn-sm grey" href="/appbenefits/create/{{$id}}/lang">
                             <i class="fa fa-plus"></i> {{ trans('appbenefits.titles.new') }} </i>
                         </a>
                     </div>
@@ -22,11 +22,8 @@
                     <thead>
                     <tr>
                         <td style="text-align: center">{{ trans("appbenefits.fields.id") }}</td>
+                        <td style="text-align: center">Language</td>
                         <td style="text-align: center">{{ trans("appbenefits.fields.establishment_id") }}</td>
-                        <td style="text-align: center">{{ trans("appbenefits.fields.category") }}</td>
-                        <td style="text-align: center">{{ trans("appbenefits.fields.description") }}</td>
-                        <td style="text-align: center">{{ trans("appbenefits.fields.status") }}</td>
-                        <td style="text-align: center">{{ trans("appbenefits.fields.single_use") }}</td>
                         <td style="text-align: center">Actions</td>
                     </tr>
                     </thead>
@@ -34,19 +31,10 @@
                         @foreach($appbenefits as $appbenefits)
                             <tr class="odd gradeX">
                                 <td style="text-align: center; vertical-align: middle;">{{$appbenefits->id}}</td>
-                                <td style="text-align: center; vertical-align: middle;">{{$appbenefits->establishment_id}}</td>
-                                <td style="text-align: center; vertical-align: middle;">{{$appbenefits->category}}</td>
+                                <td style="text-align: center; vertical-align: middle;">{{$appbenefits->lang}}</td>
                                 <td style="text-align: center; vertical-align: middle;">{{$appbenefits->description}}</td>
-                                <td style="text-align: center; vertical-align: middle; width: 50px;"><a href="{{$appbenefits->status ? '/appbenefits/'.$appbenefits->id.'/deactive' : '/appbenefits/'.$appbenefits->id.'/active'}}" class="btn btn-sm {{$appbenefits->status ? "green" : "red"}}" style="width: 35px; margin-right: 0px;"><i class="fa {{$appbenefits->status ? "fa-check" : "fa-times"}}"></i></a></td>
-                                <td style="text-align: center; vertical-align: middle;">{{$appbenefits->single_use}}</td>
-                                <td style="text-align: center; vertical-align: middle; padding: 5px 0 5px 5px;">
-                                    <a href="/appbenefits/translations/{{$appbenefits->id}}" class="btn btn-sm yellow" style="width: 35px;">
-                                        <i class="fa fa-eye"></i>
-                                    </a>
-                                    <a href="/appcodes/{{$appbenefits->id}}" class="btn btn-sm yellow" style="width: 35px;">
-                                        <i class="fa fa-plus"></i>
-                                    </a>
-                                    <a href="/appbenefits/{{$appbenefits->id}}/edit" class="btn btn-sm yellow" style="width: 35px;">
+                                <td style="text-align: center; vertical-align: middle; width: 90px !important; padding: 5px 0 5px 5px;">
+                                    <a href="/appbenefits/{{$appbenefits->id}}/editlang" class="btn btn-sm yellow" style="width: 35px;">
                                         <i class="fa fa-pencil"></i>
                                     </a>
                                     <a href="#" data-id="{{$appbenefits->id}}" class="btn btn-sm red deleteModal" style="width: 35px;">
@@ -71,7 +59,7 @@
 
         $(".deleteModal").on("click", function(){
 
-            app.throwConfirmationModal('<?php echo trans('appbenefits.titles.delete'); ?>','<?php echo trans('appbenefits.notifications.delete_confirmation'); ?>','/appbenefits/delete', $(this).data("id"));
+            app.throwConfirmationModal('<?php echo trans('appbenefits.titles.delete'); ?>','<?php echo trans('appbenefits.notifications.delete_confirmation'); ?>','/appbenefits/langdelete', $(this).data("id"));
         });
     });
 </script>

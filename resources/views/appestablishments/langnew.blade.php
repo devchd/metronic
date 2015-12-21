@@ -2,7 +2,7 @@
 
 @section('view')
 <h3 class="page-title">
-    {{ trans('appcodes.titles.new') }}
+    {{ trans('appestablishments.titles.new') }}
 </h3>
 
 <div class="row">
@@ -13,51 +13,50 @@
                 <div class="tools"></div>
             </div>
             <div class="portlet-body form">
-                <form action="/appcodes/store" method="post" id="form_appcodes" class="form-horizontal" enctype="multipart/form-data">
+                <form action="/appestablishments/langstore" method="post" id="form_appestablishments" class="form-horizontal" enctype="multipart/form-data">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                    <input type="hidden" name="benefit_id" value="{{ $benefit_id }}">
+                    <input type="hidden" name="establishment_id" value="{{ $id }}">
                     <div class="form-body">
                         <div class="form-group">
                             <label class="control-label col-md-3">
-                                {{ trans("appcodes.fields.number") }} <span class="required"> * </span>
+                                Select Language
                             </label>
                             <div class="col-md-4">
-                                <input type="text" name="number" value="{{Input::old("number")}}" class="form-control"/>
+                                <select name="lang" class="form-control">
+                                    <option value="">Select</option>
+                                    <option value="es">Spanish</option>
+                                    <option value="fn">French</option>
+                                    <option value="pt">Portugese</option>
+                                </select>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-3">
-                                {{ trans("appcodes.fields.bar_code") }} <span class="required"> * </span>
+                                {{ trans("appestablishments.fields.name") }} <span class="required"> * </span>
                             </label>
                             <div class="col-md-4">
-                                <input type="text" name="bar_code" value="{{Input::old("bar_code")}}" class="form-control"/>
+                                <input type="text" name="name" value="{{Input::old("name")}}" class="form-control"/>
                             </div>
                         </div>
+                        
                         <div class="form-group">
                             <label class="control-label col-md-3">
-                                {{ trans("appcodes.fields.client") }} <span class="required"> * </span>
+                                {{ trans("appestablishments.fields.description") }} <span class="required"> * </span>
                             </label>
                             <div class="col-md-4">
-                                <input type="text" name="client" value="{{Input::old("client")}}" class="form-control"/>
+                                <input type="text" name="description" value="{{Input::old("description")}}" class="form-control"/>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-3">
-                                {{ trans("appcodes.fields.single_use") }} 
-                            </label>
-                            <div class="col-md-4">
-                                <input type="text" name="single_use" value="{{Input::old("single_use")}}" class="form-control"/>
-                            </div>
-                        </div>
+                        
                     </div>
                     <div class="form-actions">
                         <div class="row">
                             <div class="col-md-3" style="text-align: left;">
-                                <a href="/appcodes/{{$benefit_id}}" class="btn default">{{ trans('appcodes.buttons.cancel') }}</a>
+                                <a href="/appestablishments/translation/{{$id}}" class="btn default">{{ trans('appestablishments.buttons.cancel') }}</a>
                             </div>
                             <div class="col-md-6"></div>
                             <div class="col-md-3" style="text-align: right;">
-                                <button type="submit" class="btn green">{{ trans('appcodes.buttons.register') }}</button>
+                                <button type="submit" class="btn green">{{ trans('appestablishments.buttons.register') }}</button>
                             </div>
                         </div>
                     </div>
@@ -74,30 +73,31 @@
         var app = new App();
 
         var rules = {
-            number: {
+            name: {
                 required: true
             },
-            bar_code: {
+            lang: {
                 required: true
             },
-            client: {
+            description: {
                 required: true
             }
+            
         };
 
         var messages = {
-            number: {
-                required: "<?php echo trans("appcodes.validations.required") ?>"
+            name: {
+                required: "<?php echo trans("appestablishments.validations.required") ?>"
             },
-            bar_code: {
-                required: "<?php echo trans("appcodes.validations.required") ?>"
+            description: {
+                required: "<?php echo trans("appestablishments.validations.required") ?>"
             },
-            client: {
-                required: "<?php echo trans("appcodes.validations.required") ?>"
+            lang: {
+                required: "<?php echo trans("appestablishments.validations.required") ?>"
             }
         };
 
-        app.formValidate('#form_appcodes', rules, messages);
+        app.formValidate('#form_appestablishments', rules, messages);
     });
 </script>
 @stop

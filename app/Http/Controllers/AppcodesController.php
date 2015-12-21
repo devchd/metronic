@@ -9,19 +9,19 @@ use Illuminate\Support\Facades\View;
 use App\Models\Appcodes;
 use DB;
 class AppcodesController extends Controller {
-	public function index(){
-		$appcodes = Appcodes::all();
+	public function index($id){
+		$appcodes = Appcodes::where('benefit_id', $id)->get();
 
-        return View::make('appcodes.index')->with("appcodes", $appcodes);
+        return View::make('appcodes.index')->with("appcodes", $appcodes)->with("benefit_id",$id);
 	}
 
-	public function create(){
-        $benefits = DB::table('tb_app_establishments')->get();
-		return View::make('appcodes.new')->with("benefits" , $benefits);
+	public function create($benefit_id){
+        //$benefits = DB::table('tb_app_establishments')->get();
+		return View::make('appcodes.new')->with("benefit_id" , $benefit_id);
 	}
 
 	public function store(){
-        //$benefit_id = Input::has("benefit_id") ? Input::get("benefit_id") : "";
+        $benefit_id = Input::has("benefit_id") ? Input::get("benefit_id") : "";
 	    $number = Input::has("number") ? Input::get("number") : "";
         $bar_code = Input::has("bar_code") ? Input::get("bar_code") : "";
         $client = Input::has("client") ? Input::get("client") : "";
@@ -30,12 +30,12 @@ class AppcodesController extends Controller {
 		if($number == "" || $bar_code == "" || $client == "" || $benefit_id == ""){
             Session::flash("error", trans("appcodes.notifications.field_name_missing"));
 
-            return Redirect::to("/appcodes/create")->withInput();
+            return Redirect::to("/appcodes/create/".$benefit_id)->withInput();
         }
 
 		Appcodes::create(
 			array(
-                //'benefit_id' => $benefit_id,
+                'benefit_id' => $benefit_id,
 				'number' => $number,
                 'bar_code'=> $bar_code,
                 'client'=> $client,
@@ -48,7 +48,7 @@ class AppcodesController extends Controller {
 
 		Session::flash('success', trans("appcodes.notifications.register_successful"));
 
-		return Redirect::to("/appcodes");
+		return Redirect::to("/appcodes/".$benefit_id);
 	}
 
 	public function edit($id){
@@ -60,9 +60,8 @@ class AppcodesController extends Controller {
             return Redirect::to("/appcodes");
         }
 
-        $benefits = DB::table('tb_app_establishments')->get();
-        return View::make('appcodes.edit')->with("appcodes", $appcodes)
-                    ->with("benefits" , $benefits);
+        
+        return View::make('appcodes.edit')->with("appcodes", $appcodes);
 	}
 
 	public function update(){
@@ -71,10 +70,10 @@ class AppcodesController extends Controller {
         if(!$appcodes){
             Session::flash('error', trans("appcodes.notifications.no_exists"));
 
-            return Redirect::to("/appcodes");
+            return Redirect::to("/appcodes/".$appcodes->benefit_id);
         }
 
-        //$benefit_id = Input::has("benefit_id") ? Input::get("benefit_id") : "";
+        $benefit_id = Input::has("benefit_id") ? Input::get("benefit_id") : "";
         $number = Input::has("number") ? Input::get("number") : "";
         $bar_code = Input::has("bar_code") ? Input::get("bar_code") : "";
         $client = Input::has("client") ? Input::get("client") : "";
@@ -86,7 +85,7 @@ class AppcodesController extends Controller {
             return Redirect::to("/appcodes/$appcodes->id/edit")->withInput();
         }
 
-        //$appcodes->benefit_id = $benefit_id;
+        $appcodes->benefit_id = $benefit_id;
         $appcodes->number = $number;
         $appcodes->bar_code = $bar_code;
         $appcodes->client = $client;
@@ -95,7 +94,7 @@ class AppcodesController extends Controller {
 
         Session::flash('success', trans("appcodes.notifications.update_successful"));
 
-        return Redirect::to("/appcodes");
+        return Redirect::to("/appcodes/".$benefit_id);
 	}
 
 	public function active($id){

@@ -11,7 +11,7 @@
             <div class="portlet-title">
                 <div class="actions">
                     <div class="btn-group">
-                        <a class="btn btn-sm grey" href="/categories/create">
+                        <a class="btn btn-sm grey" href="/categories/create/{{$id}}/lang">
                             <i class="fa fa-plus"></i> {{ trans('categories.titles.new') }} </i>
                         </a>
                     </div>
@@ -34,7 +34,7 @@
                                 <td style="text-align: center; vertical-align: middle;">{{$categories->name}}</td>
                                
                                 <td style="text-align: center; vertical-align: middle; width: 90px !important; padding: 5px 0 5px 5px;">
-                                    <a href="/categories/{{$categories->id}}/edit" class="btn btn-sm yellow" style="width: 35px;">
+                                    <a href="/categories/{{$categories->id}}/editlang" class="btn btn-sm yellow" style="width: 35px;">
                                         <i class="fa fa-pencil"></i>
                                     </a>
                                     <a href="#" data-id="{{$categories->id}}" class="btn btn-sm red deleteModal" style="width: 35px;">
@@ -58,7 +58,7 @@
         app.orderedTableInit('.table', 0, 'asc');
 
         $(".deleteModal").on("click", function(){
-            app.throwConfirmationModal('<?php echo trans('categories.titles.delete'); ?>','<?php echo trans('categories.notifications.delete_confirmation'); ?>','/categories/delete', $(this).data("id"));
+            app.throwConfirmationModal('<?php echo trans('categories.titles.delete'); ?>','<?php echo trans('categories.notifications.delete_confirmation'); ?>','/categories/langdelete', $(this).data("id"));
         });
     });
 </script>

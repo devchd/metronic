@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\View;
 
 use App\Models\Appestablishments;
+use App\Models\AppEstablishmentI18n;
 use DB;
 class AppestablishmentsController extends Controller {
 	public function index(){
@@ -94,7 +95,7 @@ class AppestablishmentsController extends Controller {
             return Redirect::to("/appestablishments/$appestablishments->id/edit")->withInput();
         }
 
-        var_dump($address,$lon);exit;
+        //var_dump($address,$lon);exit;
         $appestablishments->name = $name;
         $appestablishments->image = $image;
         $appestablishments->category = $category;
@@ -149,6 +150,102 @@ class AppestablishmentsController extends Controller {
 
     public function destroy(){
         $appestablishments = Appestablishments::find(Input::get("id"));
+
+        if(!$appestablishments){
+            Session::flash('error', trans("appestablishments.notifications.no_exists"));
+
+            return Redirect::to("/appestablishments");
+        }
+
+        $appestablishments->delete();
+
+        Session::flash('success', trans("appestablishments.notifications.delete_successful"));
+
+        return Redirect::to("/appestablishments");
+    }
+
+    public function displayTranslation($id){
+        $appestablishments = AppEstablishmentI18n::where('establishment_id',$id)->get();
+
+        return View::make('appestablishments.langindex')->with("appestablishments", $appestablishments)->with('id',$id);
+    }
+
+    public function langcreate($id){
+        return View::make('appestablishments.langnew')->with('id',$id);
+    }
+
+    public function langstore(){
+        $name = Input::has("name") ? Input::get("name") : "";
+        $description = Input::has("description") ? Input::get("description") : "";
+        $lang = Input::has("lang") ? Input::get("lang") : "";
+        $establishment_id = Input::has("establishment_id") ? Input::get("establishment_id") : "";
+        
+        if($name == "" || $description=="" || $lang="" ){
+            Session::flash("error", trans("appestablishments.notifications.field_name_missing"));
+
+            return Redirect::to("/appestablishments/create/".$establishment_id."/lang")->withInput();
+        }
+
+        AppEstablishmentI18n::create(
+            array(
+                'establishment_id'=> $establishment_id,
+                'name' => $name,
+                'description'=> $description,
+                'lang'=> $lang
+                
+            )
+        );
+
+        Session::flash('success', trans("appestablishments.notifications.register_successful"));
+
+        return Redirect::to("/appestablishments/translation".$establishment_id);
+    }
+    public function langedit($id){
+        $appestablishments = AppEstablishmentI18n::find($id);
+
+        if(!$appestablishments){
+            Session::flash('error', trans("appestablishments.notifications.no_exists"));
+
+            return Redirect::to("/appestablishments");
+        }
+        return View::make('appestablishments.langedit')->with("appestablishments", $appestablishments);
+    }
+
+    public function langupdate(){
+        $appestablishments = AppEstablishmentI18n::find(Input::get("id"));
+
+        if(!$appestablishments){
+            Session::flash('error', trans("appestablishments.notifications.no_exists"));
+
+            return Redirect::to("/appestablishments");
+        }
+
+        $name = Input::has("name") ? Input::get("name") : "";
+        $description = Input::has("description") ? Input::get("description") : "";
+        $lang = Input::has("lang") ? Input::get("lang") : "";
+        $establishment_id = Input::has("establishment_id") ? Input::get("establishment_id") : "";
+        
+        
+        if($name == "" || $description=="" || $lang="" ){
+            Session::flash("error", trans("appestablishments.notifications.field_name_missing"));
+
+            return Redirect::to("/appestablishments/$appestablishments->id/langedit")->withInput();
+        }
+
+
+        $appestablishments->name = $name;
+        $appestablishments->lang = $lang;
+        $appestablishments->description = $description;
+
+        $appestablishments->save();
+
+        Session::flash('success', trans("appestablishments.notifications.update_successful"));
+
+        return Redirect::to("/appestablishments/translation/".$establishment_id);
+    }
+
+    public function langdestroy(){
+        $appestablishments = AppEstablishmentI18n::find(Input::get("id"));
 
         if(!$appestablishments){
             Session::flash('error', trans("appestablishments.notifications.no_exists"));

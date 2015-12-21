@@ -16,6 +16,7 @@
                 <form action="/appcodes/update" method="post" id="form_appcodes" class="form-horizontal" enctype="multipart/form-data">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <input type="hidden" name="id" value="{{ $appcodes->id }}">
+                    <input type="hidden" name="id" value="{{ $appcodes->benefit_id }}">
                     <div class="form-body">
                         
                         <div class="form-group">
@@ -54,7 +55,7 @@
                     <div class="form-actions">
                         <div class="row">
                             <div class="col-md-3" style="text-align: left;">
-                                <a href="/appcodes" class="btn default">{{ trans('appcodes.buttons.cancel') }}</a>
+                                <a href="/appcodes/{{$appcodes->benefit_id}}" class="btn default">{{ trans('appcodes.buttons.cancel') }}</a>
                             </div>
                             <div class="col-md-6"></div>
                             <div class="col-md-3" style="text-align: right;">

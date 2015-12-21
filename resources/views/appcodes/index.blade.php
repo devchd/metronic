@@ -11,7 +11,7 @@
             <div class="portlet-title">
                 <div class="actions">
                     <div class="btn-group">
-                        <a class="btn btn-sm grey" href="/appcodes/create">
+                        <a class="btn btn-sm grey" href="/appcodes/create/{{$benefit_id}}">
                             <i class="fa fa-plus"></i> {{ trans('appcodes.titles.new') }} </i>
                         </a>
                     </div>

@@ -16,4 +16,8 @@ class Appcodes extends Model {
 
 	protected $fillable = ['id','benefit_id','number','bar_code','status','client','single_use','created_at','updated_at'];
 
+	public function benefit()
+    {
+        return $this->belongsTo('App\Models\Appbenefits');
+    }
 }

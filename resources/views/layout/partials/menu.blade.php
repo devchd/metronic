@@ -17,16 +17,16 @@
                 <!-- END SIDEBAR TOGGLER BUTTON -->
             </li>
             <br>
-            <li class="start {{ isset($menu) && $menu == 'menu1' ? 'active open' : '' }}">
+            <li class="start {{ isset($menu) && $menu == 'Categories' ? 'active open' : '' }}">
                 <a href="javascript:;">
                     <i class="fa fa-users"></i>
-                    <span class="title">Menu 1</span>
+                    <span class="title">Catgeories</span>
                     <span class="selected"></span>
                     <span class="arrow open"></span>
                 </a>
                 <ul class="sub-menu">
-                    <li class="{{ isset($submenu) && $submenu == 'submenu1' ? 'active' : '' }}">
-                        <a href="#"><i class="fa fa-user"></i> SubMenu 1.1</a>
+                    <li class="{{ isset($submenu) && $submenu == 'listcategory' ? 'active' : '' }}">
+                        <a href="/categories"><i class="fa fa-user"></i> List Categories</a>
                     </li>
                     <li class="{{ isset($submenu) && $submenu == 'submenu2' ? 'active' : '' }}">
                         <a href="#"><i class="fa fa-users"></i> SubMenu 1.2</a>
