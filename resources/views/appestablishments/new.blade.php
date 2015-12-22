@@ -29,7 +29,7 @@
                                 {{ trans("appestablishments.fields.image") }} <span class="required"> * </span>
                             </label>
                             <div class="col-md-4">
-                                <input type="text" name="image" value="{{Input::old("image")}}" class="form-control"/>
+                                <input type="file" name="image" class="form-control"/>
                             </div>
                         </div>
                         <div class="form-group">

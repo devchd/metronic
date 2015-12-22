@@ -4,7 +4,8 @@
     "require": {
         "php": ">=5.5.9",
         "laravel/framework": "5.1.*",
-        "raalveco/scaffolding": "dev-master"
+        "raalveco/scaffolding": "dev-master",
+        "milon/barcode": "~1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

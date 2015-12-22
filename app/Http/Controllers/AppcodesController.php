@@ -23,7 +23,7 @@ class AppcodesController extends Controller {
 	public function store(){
         $benefit_id = Input::has("benefit_id") ? Input::get("benefit_id") : "";
 	    $number = Input::has("number") ? Input::get("number") : "";
-        $bar_code = Input::has("bar_code") ? Input::get("bar_code") : "";
+        $bar_code = "data:image/png;base64," . \DNS1D::getBarcodePNG($number, "C39+");
         $client = Input::has("client") ? Input::get("client") : "";
         $single_use = Input::has("single_use") ? Input::get("single_use") : "";
 
@@ -75,7 +75,7 @@ class AppcodesController extends Controller {
 
         $benefit_id = Input::has("benefit_id") ? Input::get("benefit_id") : "";
         $number = Input::has("number") ? Input::get("number") : "";
-        $bar_code = Input::has("bar_code") ? Input::get("bar_code") : "";
+        $bar_code = "data:image/png;base64," . \DNS1D::getBarcodePNG($number, "C39+");
         $client = Input::has("client") ? Input::get("client") : "";
         $single_use = Input::has("single_use") ? Input::get("single_use") : "";
         
@@ -137,13 +137,13 @@ class AppcodesController extends Controller {
         if(!$appcodes){
             Session::flash('error', trans("appcodes.notifications.no_exists"));
 
-            return Redirect::to("/appcodes");
+            return Redirect::to("/appcodes/".$appcodes->benefit_id);
         }
 
         $appcodes->delete();
 
         Session::flash('success', trans("appcodes.notifications.delete_successful"));
 
-        return Redirect::to("/appcodes");
+        return Redirect::to("/appcodes/".$appcodes->benefit_id);
     }
 }

@@ -37,7 +37,7 @@
                                 <td style="text-align: center; vertical-align: middle;">{{$appcodes->id}}</td>
                                 <td style="text-align: center; vertical-align: middle;">{{$appcodes->benefit_id}}</td>
                                 <td style="text-align: center; vertical-align: middle;">{{$appcodes->number}}</td>
-                                <td style="text-align: center; vertical-align: middle;">{{$appcodes->bar_code}}</td>
+                                <td style="text-align: center; vertical-align: middle;"><img src="{{$appcodes->bar_code}}" width="40" /></td>
                                 <td style="text-align: center; vertical-align: middle; width: 50px;"><a href="{{$appcodes->status ? '/appcodes/'.$appcodes->id.'/deactive' : '/appcodes/'.$appcodes->id.'/active'}}" class="btn btn-sm {{$appcodes->status ? "green" : "red"}}" style="width: 35px; margin-right: 0px;"><i class="fa {{$appcodes->status ? "fa-check" : "fa-times"}}"></i></a></td>
                                 <td style="text-align: center; vertical-align: middle;">{{$appcodes->client}}</td>
                                 <td style="text-align: center; vertical-align: middle;">{{$appcodes->single_use}}</td>

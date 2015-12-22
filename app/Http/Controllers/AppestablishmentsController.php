@@ -23,7 +23,7 @@ class AppestablishmentsController extends Controller {
 
 	public function store(){
 	    $name = Input::has("name") ? Input::get("name") : "";
-        $image = Input::has("image") ? Input::get("image") : "";
+        $image = Input::hasFile('image') ? Input::file('image') : "";
         $category = Input::has("category") ? Input::get("category") : "";
         $description = Input::has("description") ? Input::get("description") : "";
         $address = Input::has("address") ? Input::get("address") : "";
@@ -37,11 +37,20 @@ class AppestablishmentsController extends Controller {
 
             return Redirect::to("/appestablishments/create")->withInput();
         }
+        if(Input::hasFile('image')){
+            if (Input::file('image')->isValid()) {
+                $destinationPath = 'uploads'; // upload path
+                $extension = Input::file('image')->getClientOriginalExtension(); // getting image extension
+                $fileName = rand(11111,99999).'.'.$extension; // renameing image
+                Input::file('image')->move($destinationPath, $fileName);
+            }
+        }
+        
 
 		Appestablishments::create(
 			array(
 				'name' => $name,
-                'image'=> $image,
+                'image'=> 'http://localhost:8000/uploads/'.$fileName,
                 'category'=> $category,
                 'description'=> $description,
                 'address'=> $address,
@@ -79,8 +88,20 @@ class AppestablishmentsController extends Controller {
             return Redirect::to("/appestablishments");
         }
 
+        if(Input::hasFile('image')){
+            if (Input::file('image')->isValid()) {
+                $destinationPath = 'uploads'; // upload path
+                $extension = Input::file('image')->getClientOriginalExtension(); // getting image extension
+                $fileName = rand(11111,99999).'.'.$extension; // renameing image
+                Input::file('image')->move($destinationPath, $fileName);
+                $image = $fileName;
+            }
+        } else {
+            $image = $appestablishments->image;
+        }
+
         $name = Input::has("name") ? Input::get("name") : "";
-        $image = Input::has("image") ? Input::get("image") : "";
+        //$image = Input::hasFile('image') ? Input::file('image') : "";
         $category = Input::has("category") ? Input::get("category") : "";
         $description = Input::has("description") ? Input::get("description") : "";
         $address = Input::has("address") ? Input::get("address") : "";

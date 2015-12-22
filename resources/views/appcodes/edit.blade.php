@@ -16,7 +16,7 @@
                 <form action="/appcodes/update" method="post" id="form_appcodes" class="form-horizontal" enctype="multipart/form-data">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <input type="hidden" name="id" value="{{ $appcodes->id }}">
-                    <input type="hidden" name="id" value="{{ $appcodes->benefit_id }}">
+                    <input type="hidden" name="benefit_id" value="{{ $appcodes->benefit_id }}">
                     <div class="form-body">
                         
                         <div class="form-group">
@@ -27,14 +27,14 @@
                                 <input type="text" name="number" value="{{$appcodes->number}}" class="form-control"/>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label class="control-label col-md-3">
                                 {{ trans("appcodes.fields.bar_code") }} <span class="required"> * </span>
                             </label>
                             <div class="col-md-4">
                                 <input type="text" name="bar_code" value="{{$appcodes->bar_code}}" class="form-control"/>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="form-group">
                             <label class="control-label col-md-3">
                                 {{ trans("appcodes.fields.client") }} <span class="required"> * </span>
@@ -79,9 +79,9 @@
             number: {
                 required: true
             },
-            bar_code: {
-                required: true
-            },
+            // bar_code: {
+            //     required: true
+            // },
             client: {
                 required: true
             }
@@ -91,9 +91,9 @@
             number: {
                 required: "<?php echo trans("appcodes.validations.required") ?>"
             },
-            bar_code: {
-                required: "<?php echo trans("appcodes.validations.required") ?>"
-            },
+            // bar_code: {
+            //     required: "<?php echo trans("appcodes.validations.required") ?>"
+            // },
             client: {
                 required: "<?php echo trans("appcodes.validations.required") ?>"
             }

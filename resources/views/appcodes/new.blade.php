@@ -25,14 +25,14 @@
                                 <input type="text" name="number" value="{{Input::old("number")}}" class="form-control"/>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label class="control-label col-md-3">
                                 {{ trans("appcodes.fields.bar_code") }} <span class="required"> * </span>
                             </label>
                             <div class="col-md-4">
                                 <input type="text" name="bar_code" value="{{Input::old("bar_code")}}" class="form-control"/>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="form-group">
                             <label class="control-label col-md-3">
                                 {{ trans("appcodes.fields.client") }} <span class="required"> * </span>
@@ -77,9 +77,9 @@
             number: {
                 required: true
             },
-            bar_code: {
-                required: true
-            },
+            // bar_code: {
+            //     required: true
+            // },
             client: {
                 required: true
             }
@@ -89,9 +89,9 @@
             number: {
                 required: "<?php echo trans("appcodes.validations.required") ?>"
             },
-            bar_code: {
-                required: "<?php echo trans("appcodes.validations.required") ?>"
-            },
+            // bar_code: {
+            //     required: "<?php echo trans("appcodes.validations.required") ?>"
+            // },
             client: {
                 required: "<?php echo trans("appcodes.validations.required") ?>"
             }
